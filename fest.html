@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARKX 2025 | Royal Edition</title>
+
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FFD700"/><text x="50" y="55" font-size="70" text-anchor="middle" fill="black" font-family="serif" font-weight="900">X</text></svg>'>
+
+<style>
+    /* --- FONTS --- */
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+    /* --- VARIABLES --- */
+    :root {
+        --royal-gold: #FFD700;
+        --gold-dim: #C5A000;
+        --royal-purple: #4b0082;
+        --purple-light: #9d00ff;
+        --obsidian: #050505;
+        --glass-panel: rgba(10, 10, 10, 0.85);
+        --text-white: #f0f0f0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background-color: var(--obsidian);
+        font-family: 'Rajdhani', sans-serif;
+        color: var(--text-white);
+        overflow-x: hidden;
+    }
+
+    /* --- BACKGROUND EFFECTS --- */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: 
+            radial-gradient(var(--gold-dim) 1px, transparent 1px),
+            radial-gradient(var(--gold-dim) 1px, transparent 1px);
+        background-size: 50px 50px;
+        background-position: 0 0, 25px 25px;
+        opacity: 0.1;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    #matrixCanvas {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 0;
+        opacity: 0.15;
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 2;
+        padding: 20px;
+        background: radial-gradient(circle at center, rgba(75, 0, 130, 0.2) 0%, transparent 70%);
+    }
+
+    .dept-badge {
+        font-family: 'Cinzel', serif;
+        border: 1px solid var(--royal-gold);
+        color: var(--royal-gold);
+        padding: 10px 30px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        position: relative;
+    }
+
+    .dept-badge::before, .dept-badge::after {
+        content: '⬥';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--royal-gold);
+        font-size: 1.2rem;
+    }
+    .dept-badge::before { left: -20px; }
+    .dept-badge::after { right: -20px; }
+
+    .brand-title {
+        font-family: 'Cinzel', serif;
+        font-size: 7vw;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        line-height: 1;
+        letter-spacing: 5px;
+        position: relative;
+        text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+    }
+
+    /* THE ROYAL X ANIMATION */
+    .royal-x {
+        display: inline-block;
+        position: relative;
+        color: transparent;
+        -webkit-text-stroke: 2px var(--royal-gold);
+        
+        background: linear-gradient(
+            135deg, 
+            #000 0%, 
+            #000 40%, 
+            #fff 50%, 
+            #ffd700 55%, 
+            #000 60%, 
+            #000 100%
+        );
+        background-size: 400% 400%;
+        
+        -webkit-background-clip: text;
+        background-clip: text; 
+        -webkit-text-fill-color: transparent;
+        
+        animation: spark-move 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+    }
+
+    .royal-x::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px; height: 100px;
+        background: radial-gradient(circle, white 0%, rgba(255,215,0,0) 60%);
+        mix-blend-mode: overlay;
+        opacity: 0;
+        animation: spark-flash 3s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes spark-move {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes spark-flash {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        45% { opacity: 0; }
+        50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+        55% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    /* Typography Classes (Fixed from inline styles) */
+    .hero-year {
+        font-family: 'Cinzel', serif; 
+        color: var(--royal-gold); 
+        font-size: 1.5rem; 
+        letter-spacing: 10px; 
+        margin-top: 10px;
+    }
+
+    .hero-sub {
+        font-size: 1.2rem;
+        color: #d4af37;
+        margin-top: 30px;
+        letter-spacing: 2px;
+        font-weight: 300;
+    }
+
+    .royal-btn {
+        margin-top: 50px;
+        padding: 20px 60px;
+        background: transparent;
+        border: 1px solid var(--royal-gold);
+        color: var(--royal-gold);
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: 0.5s;
+        z-index: 1;
+    }
+
+    .royal-btn::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 0%; height: 100%;
+        background: var(--royal-gold);
+        z-index: -1;
+        transition: 0.5s;
+    }
+
+    .royal-btn:hover {
+        color: black;
+        box-shadow: 0 0 30px var(--royal-gold);
+    }
+    .royal-btn:hover::before { width: 100%; }
+
+    /* --- EVENT CARDS SECTION --- */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 70px;
+        position: relative;
+    }
+
+    .section-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2.8rem;
+        color: white;
+        text-transform: uppercase;
+        display: inline-block;
+        padding-bottom: 10px;
+        border-bottom: 3px double var(--royal-gold);
+    }
+    
+    .section-subtitle {
+        color: var(--royal-gold);
+        font-size: 0.9rem;
+        margin-top: 10px;
+        letter-spacing: 2px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 40px;
+    }
+
+    .card {
+        background: var(--glass-panel);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        padding: 40px 30px;
+        position: relative;
+        transition: 0.4s;
+        transform-style: preserve-3d;
+        overflow: hidden;
+    }
+
+    .card::before, .card::after {
+        content: '';
+        position: absolute;
+        width: 20px; height: 20px;
+        border: 2px solid var(--royal-gold);
+        transition: 0.4s;
+        opacity: 0.5;
+    }
+    .card::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .card::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--royal-gold);
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    }
+
+    .card:hover::before, .card:hover::after {
+        width: 100%; height: 100%;
+        opacity: 1;
+    }
+
+    .icon {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        display: inline-block;
+        background: linear-gradient(45deg, var(--royal-gold), #fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card h3 {
+        font-family: 'Cinzel', serif;
+        font-size: 1.4rem;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .card p {
+        color: #ccc;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .gold-link {
+        color: var(--royal-gold);
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+        border-bottom: 1px solid transparent;
+        transition: 0.3s;
+    }
+    
+    .gold-link:hover {
+        border-bottom-color: var(--royal-gold);
+        text-shadow: 0 0 10px var(--royal-gold);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+        background: #000;
+        border-top: 1px solid var(--gold-dim);
+        padding: 80px 20px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .contact-box {
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        display: inline-block;
+        padding: 20px 40px;
+        margin-bottom: 30px;
+    }
+
+    /* Footer Typography (Fixed from inline styles) */
+    .footer-role {
+        color: #666; 
+        letter-spacing: 2px; 
+        font-size: 0.8rem;
+    }
+    
+    .footer-num { 
+        font-size: 1.5rem; 
+        color: var(--royal-gold); 
+        font-family: 'Cinzel', serif; 
+        font-weight: bold;
+        display: block;
+        margin: 10px 0;
+    }
+
+    .footer-email {
+        color: #888;
+    }
+
+    .footer-copy {
+        color: #444; 
+        font-size: 0.8rem; 
+        letter-spacing: 2px;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+        .brand-title { font-size: 3.5rem; }
+        .royal-x { -webkit-text-stroke: 1px var(--royal-gold); }
+    }
+</style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <section class="hero">
+        <div class="dept-badge">Aditya School of Computer Science</div>
+        
+        <h1 class="brand-title">
+            SPARK<span class="royal-x">X</span>
+        </h1>
+        <div class="hero-year">
+            2025
+        </div>
+        
+        <p class="hero-sub">
+            The Royal Assembly of Tech & Innovation
+        </p>
+
+        <a href="#events" class="royal-btn">Enter The Realm</a>
+    </section>
+
+    <div class="container" id="events">
+        <div class="section-header">
+            <h2 class="section-title">The Modules</h2>
+            <div class="section-subtitle">Core Events & Competitions</div>
+        </div>
+
+        <div class="grid">
+            <div class="card js-tilt">
+                <span class="icon">📜</span>
+                <h3>Project Presentations</h3>
+                <p>Unveil your technical research. Present your papers on AI, Blockchain, or Cloud Computing to the grand panel.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: PPT" class="gold-link">Submit Abstract</a>
+            </div>
+
+            <div class="card js-tilt">
+                <span class="icon">🕸️</span>
+                <h3>Live Web Design</h3>
+                <p>Weave the digital web. Demonstrate full-stack architectures and responsive designs live.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: Website" class="gold-link">Deploy Project</a>
+            </div>
+
+            <div class="card js-tilt">
+                <span class="icon">👁️</span>
+                <h3>Blind Coding</h3>
+                <p>A test of true mastery. Write flawless logic with your vision obscured. Monitor off, mind on.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: Blind Coding" class="gold-link">Accept Challenge</a>
+            </div>
+
+            <div class="card js-tilt">
+                <span class="icon">🐛</span>
+                <h3>Bug Hunter</h3>
+                <p>Restore order to chaos. Find and fix the flaws in the provided code before time runs out.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: Bug Hunter" class="gold-link">Start Hunt</a>
+            </div>
+
+            <div class="card js-tilt">
+                <span class="icon">⚔️</span>
+                <h3>Gaming Arena</h3>
+                <p>The battlefield awaits. BGMI & Valorant tournaments for the ultimate campus glory.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: Gaming" class="gold-link">Join Lobby</a>
+            </div>
+
+            <div class="card js-tilt">
+                <span class="icon">🗝️</span>
+                <h3>Royal Treasure Hunt</h3>
+                <p>Seek the hidden sigils (QR Codes) scattered across the Aditya Kingdom. Solve the riddles.</p>
+                <a href="mailto:jayadeepsaichaganti@gmail.com?subject=Register: Treasure Hunt" class="gold-link">Begin Quest</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-box">
+            <p class="footer-role">ROYAL COORDINATOR</p>
+            <span class="footer-num">+91 91602 86679</span>
+            <p class="footer-email">jayadeepsaichaganti@gmail.com</p>
+        </div>
+        <p class="footer-copy">
+            ADITYA SCHOOL OF COMPUTER SCIENCE | MCA DEPT
+        </p>
+    </footer>
+
+    <script>
+        // 1. GOLDEN MATRIX RAIN EFFECT
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const chars = 'SPARKX♔♕2025'.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; // Fade effect trail
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#C5A000'; // Matrix font color
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 40);
+
+        // 2. 3D CARD TILT INTERACTION
+        const cards = document.querySelectorAll('.js-tilt');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5; // Tilt intensity
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
